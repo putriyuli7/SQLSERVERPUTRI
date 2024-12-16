@@ -17,4 +17,10 @@ FROM TRAINING.DBO.Produk GROUP BY Kategori
 )
 SELECT 
 * 
-FROM TableCTE;
+FROM TableCTE 
+WHERE totalstock > 20;
+
+2.Buatlah sebuah query untuk menghitung total penjualan per karyawan, termasuk hanya karyawan yang memiliki penjualan lebih besar dari rata-rata semua penjualan.
+WITH based1 as(SELECT se.Name, SUM(es.SaleAmount)as totalpenjualan FROM SalesEmployees se JOIN EmployeeSales es ON se.EmployeeID = es.EmployeeID GROUP BY se.Name)
+,based2 as(SELECT AVG(totalpenjualan) avgtotal FROM based1)
+SELECT * FROM based1, based2 WHERE totalpenjualan > avgtotal
