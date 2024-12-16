@@ -1,0 +1,38 @@
+1. Subquery: Tampilkan nama produk dan kategori untuk produk yang memiliki harga lebih tinggi 
+daripada rata-rata harga semua produk.
+
+SELECT NamaProduk,Kategori FROM Produk p WHERE Harga > (SELECT AVG(Harga) FROM Produk p2) 
+
+2. Conditional Expression: Tambahkan kolom Ketersediaan (Virtual Column) untuk menampilkan status produk:
+Tersedia jika stok lebih dari 10.
+Habis jika stok 0.
+Terbatas untuk stok antara 1 hingga 10.
+
+SELECT NamaProduk ,Stok, CASE WHEN stok > 10 THEN 'Tersedia'
+	WHEN stok = 0 THEN 'Habis'
+	ELSE 'Terbatas' END as Status
+FROM Produk p 
+
+
+3. Subquery dan Join: Tampilkan nama produk, kategori, jumlah terjual untuk semua transaksi.
+
+SELECT p.ProdukID,p2.NamaProduk,p2.Kategori, p.JumlahTerjual FROM Penjualan p 
+JOIN Produk p2 ON p.ProdukID  = p2.ProdukID 
+
+
+4. Analisis Conditional Expression: Hitung total pendapatan per kategori. 
+
+SELECT p2.kategori, SUM(p.JumlahTerjual*p2.Harga)  as Total_pendapatan FROM Penjualan p 
+JOIN Produk p2 ON p.ProdukID  = p2.ProdukID 
+GROUP BY p2.Kategori 
+
+
+
+
+
+
+
+
+
+
+
